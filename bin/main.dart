@@ -19,5 +19,32 @@
 /// Input : 49927398716
 /// Output: 49927398716 passes the test
 
+int partialSum1(List<int> evens){
+  List<int> result = [];
+  for(int digit in evens){
+    digit = digit * 2;
+    if(digit > 9){
+      List<dynamic> temp = digit.toString().split('').toList();
+      digit = int.parse(temp[0])+ int.parse(temp[1]);
+    }
+    result.add(digit);
+  }
+  return result.reduce((a, b) => a + b);
+
+}
+
+bool luhnTest(String input){
+  List<String> copy = input.split('').toList().reversed.toList();
+  List<int> even = [];
+  List<int> odd = [];
+  for (int i = 0; i < copy.length; i++){
+    String digit = copy[i];
+    i % 2 != 0 ? even.add(int.parse(digit)) : odd.add(int.parse(digit));
+  }
+  int s1 = odd.reduce((a, b) => a + b);
+  int s2 = partialSum1(even);
+  return (((s1 + s2) % 10) == 0);
+}
+
 main() {
 }
